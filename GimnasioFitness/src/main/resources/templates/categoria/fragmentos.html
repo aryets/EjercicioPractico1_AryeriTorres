@@ -58,31 +58,76 @@
 
     <!-- 3. Editar categoría -->
     <section th:fragment="editar">
-        <form th:action="@{/categoria/guardar}" th:object="${categoria}" method="post" class="bg-dark text-light p-3 rounded">
-            <input type="hidden" th:field="*{id}"/>
-            <div class="mb-3">
-                <label>[[#{categoria.nombre}]]</label>
-                <input type="text" th:field="*{nombre}" class="form-control bg-dark text-light border-secondary" required/>
+        <div class="modal fade" id="editarCategoriaModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark text-light">
+                    <form th:action="@{/categoria/guardar}" th:object="${categoria}" method="post">
+
+                        <!-- Encabezado del modal -->
+                        <div class="modal-header bg-secondary text-white">
+                            <h5 class="modal-title">[[#{accion.actualizar}]]</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Cuerpo del modal -->
+                        <div class="modal-body">
+                            <input type="hidden" th:field="*{id}"/>
+                            <label>[[#{categoria.nombre}]]</label>
+                            <input type="text" th:field="*{nombre}" 
+                                   class="form-control bg-dark text-light border-secondary" required/>
+                        </div>
+
+                        <!-- Pie del modal -->
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-outline-light">
+                                <i class="fa fa-check"></i> [[#{accion.guardar}]]
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <button type="submit" class="btn btn-outline-light">[[#{accion.guardar}]]</button>
-        </form>
+        </div>
     </section>
     
     <!-- 4. Confirmar eliminación -->
     <section th:fragment="confirmarEliminar">
-        <form th:action="@{/categoria/eliminar}" method="post" class="bg-dark text-light p-3 rounded">
-            <input type="hidden" name="id" id="modalId"/>
-            <div class="modal-body">
-                <p>[[#{accion.confirmar.texto1}]] <span id="modalDescripcion"></span>?</p>
+        <div class="modal fade" 
+             id="confirmModal" 
+             tabindex="-1" 
+             aria-labelledby="modalLabel" 
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-dark text-light">
+                    <form th:action="@{/categoria/eliminar}" method="post">
+                        <!-- Campo oculto para el id -->
+                        <input type="hidden" name="id" id="modalId"/>
+
+                        <!-- Encabezado del modal -->
+                        <div class="modal-header bg-warning text-white">
+                            <h5 class="modal-title" id="modalLabel">
+                                <i class="fa-solid fa-circle-radiation"></i> [[#{accion.confirmar}]]
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Cuerpo del modal -->
+                        <div class="modal-body">
+                            <p>[[#{accion.confirmar.texto1}]] <span id="modalDescripcion"></span>?</p>
+                            <h6>[[#{accion.confirmar.texto2}]]</h6>
+                        </div>
+
+                        <!-- Pie del modal -->
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fa-solid fa-trash"></i> [[#{accion.eliminar}]]
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                <i class="fa-solid fa-xmark"></i> [[#{accion.cerrar}]]
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-outline-light">
-                    <i class="fa-solid fa-trash"></i> [[#{accion.eliminar}]]
-                </button>
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                    [[#{accion.cerrar}]]
-                </button>
-            </div>
-        </form>
+        </div>
     </section>
 </html>
