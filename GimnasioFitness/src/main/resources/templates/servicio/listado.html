@@ -4,8 +4,14 @@
     <head th:replace="~{general/fragmentos :: head}"/>
     <body class="bg-dark text-light">
         <header th:replace="~{general/fragmentos :: header}"/>
-        <section th:replace="~{servicio/fragmentos :: agregar}"/>
+        <section class="mb-5">
+            <h1 class="text-center text-light"> Clases / Servicios de Entrenamiento</h1>
+            <p class="lead text-center text-light">
+                En esta sección podrás agregar, editar o eliminar las clases / servicios de entrenamiento
+            </p>
+        </section>
         <section th:replace="~{servicio/fragmentos :: listado}"/>
+        <section th:replace="~{servicio/fragmentos :: agregar}"/>
 
         <footer th:replace="~{general/fragmentos :: footer}"/>
     </body>

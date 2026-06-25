@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CategoriaService {
+
     private final CategoriaRepository categoriaRepository;
 
     public CategoriaService(CategoriaRepository categoriaRepository) {
@@ -21,8 +22,8 @@ public class CategoriaService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Categoria> getCategoria(Integer id) {
-        return categoriaRepository.findById(id);
+    public Optional<Categoria> getCategoria(Integer idCategoria) {
+        return categoriaRepository.findById(idCategoria);
     }
 
     @Transactional
@@ -31,7 +32,7 @@ public class CategoriaService {
     }
 
     @Transactional
-    public void delete(Integer id) {
-        categoriaRepository.deleteById(id);
+    public void delete(Integer idCategoria) {
+        categoriaRepository.deleteById(idCategoria);
     }
 }
