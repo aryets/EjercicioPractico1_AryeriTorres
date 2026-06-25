@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/categoria")
@@ -34,19 +35,9 @@ public class CategoriaController {
         categoriaService.save(categoria);
         return "redirect:/categoria/listado";
     }
-
-    @GetMapping("/modificar/{id}")
-    public String modificar(@PathVariable Integer id, Model model) {
-        var categoriaOpt = categoriaService.getCategoria(id);
-        if (categoriaOpt.isEmpty()) {
-            return "redirect:/categoria/listado";
-        }
-        model.addAttribute("categoria", categoriaOpt.get());
-        return "categoria/modifica";
-    }
-
-    @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Integer id) {
+    
+    @PostMapping("/eliminar")
+    public String eliminar(@RequestParam("id") Integer id) {
         categoriaService.delete(id);
         return "redirect:/categoria/listado";
     }
