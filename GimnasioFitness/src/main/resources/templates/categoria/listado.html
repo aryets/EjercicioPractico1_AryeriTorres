@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.thymeleaf.org">
-    <body>
+    <head th:replace="~{general/fragmentos :: head}"/>
+    <body class="bg-dark text-light">
         <header th:replace="~{general/fragmentos :: header}"/>
-        <!-- Modal para agregar -->
+        <section th:replace="~{categoria/fragmentos :: listado}"/>
         <section th:replace="~{categoria/fragmentos :: agregar}"/>
-        <!-- Modal para confirmar eliminación -->
         <section th:replace="~{categoria/fragmentos :: confirmarEliminar}"/>
-        <!-- Toast de mensajes -->
-        <section th:replace="~{general/fragmentos :: mostrarToast}"/>
         <footer th:replace="~{general/fragmentos :: footer}"/>
     </body>
 </html>
