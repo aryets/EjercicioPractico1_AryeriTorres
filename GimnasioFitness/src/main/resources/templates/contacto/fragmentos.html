@@ -1,0 +1,38 @@
+<<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <body>
+        <section th:fragment="contacto">
+            <div class="container my-5">
+                <div class="card bg-dark text-light border-secondary">
+                    <div class="card-header bg-secondary text-white">
+                        <h4><i class="fa-solid fa-envelope"></i> [[#{contacto.titulo}]]</h4>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="nombre">[[#{contacto.nombre}]]</label>
+                                <input type="text" id="nombre" class="form-control bg-dark text-light border-secondary" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="correo">[[#{contacto.correo}]]</label>
+                                <input type="email" id="correo" class="form-control bg-dark text-light border-secondary" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="mensaje">[[#{contacto.mensaje}]]</label>
+                                <textarea id="mensaje" rows="4" class="form-control bg-dark text-light border-secondary" required></textarea>
+                            </div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-outline-light">
+                            <i class="fa-solid fa-paper-plane"></i> [[#{contacto.enviar}]]
+                        </button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+                            
+    </body>
+</html>

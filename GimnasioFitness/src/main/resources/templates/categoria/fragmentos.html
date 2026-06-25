@@ -30,30 +30,28 @@
         </div>
     </section>
 
-    <!-- 2. Listado de categorías -->
     <section th:fragment="listado">
-        <table class="table table-dark table-striped table-bordered shadow">
-            <thead class="table-secondary">
-                <tr>
-                    <th>[[#{categoria.nombre}]]</th>
-                    <th class="text-center">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="c : ${categorias}">
-                    <td th:text="${c.nombre}"></td>
-                    <td class="text-center">
-                        <a th:href="@{/categoria/eliminar/{id}(id=${c.id})}" class="btn btn-sm btn-outline-light me-2">
-                            <i class="fa fa-trash"></i> Eliminar
-                        </a>
-                        <a th:href="@{/categoria/modificar/{id}(id=${c.id})}" class="btn btn-sm btn-outline-secondary">
-                            <i class="fa fa-pencil-alt"></i> Editar
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <p class="fw-bold">[[#{categoria.total}]]: <span th:text="${totalCategorias}"></span></p>
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center"
+                th:each="c : ${categorias}">
+                <span th:text="${c.nombre}"></span>
+                <div>
+                    <!-- Botón Editar -->
+                    <a href="#" class="btn btn-sm btn-outline-secondary"
+                       data-bs-toggle="modal" data-bs-target="#editarCategoriaModal"
+                       th:attr="data-id=${c.id},data-nombre=${c.nombre}">
+                        <i class="fa fa-pencil-alt"></i> Editar
+                    </a>
+
+                    <!-- Botón Eliminar -->
+                    <a href="#" class="btn btn-sm btn-outline-danger"
+                       data-bs-toggle="modal" data-bs-target="#confirmModal"
+                       th:attr="data-id=${c.id},data-nombre=${c.nombre}">
+                        <i class="fa fa-trash"></i> Eliminar
+                    </a>
+                </div>
+            </li>
+        </ul>
     </section>
 
     <!-- 3. Editar categoría -->
@@ -62,26 +60,19 @@
             <div class="modal-dialog">
                 <div class="modal-content bg-dark text-light">
                     <form th:action="@{/categoria/guardar}" th:object="${categoria}" method="post">
-
-                        <!-- Encabezado del modal -->
                         <div class="modal-header bg-secondary text-white">
                             <h5 class="modal-title">[[#{accion.actualizar}]]</h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                         </div>
-
-                        <!-- Cuerpo del modal -->
                         <div class="modal-body">
                             <input type="hidden" th:field="*{id}"/>
                             <label>[[#{categoria.nombre}]]</label>
                             <input type="text" th:field="*{nombre}" 
                                    class="form-control bg-dark text-light border-secondary" required/>
                         </div>
-
-                        <!-- Pie del modal -->
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-outline-light">
-                                <i class="fa fa-check"></i> [[#{accion.guardar}]]
-                            </button>
+                            <button type="submit" class="btn btn-outline-light">[[#{accion.guardar}]]</button>
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">[[#{accion.cerrar}]]</button>
                         </div>
                     </form>
                 </div>
@@ -103,7 +94,7 @@
                         <input type="hidden" name="id" id="modalId"/>
 
                         <!-- Encabezado del modal -->
-                        <div class="modal-header bg-warning text-white">
+                        <div class="modal-header bg-secondary text-white">
                             <h5 class="modal-title" id="modalLabel">
                                 <i class="fa-solid fa-circle-radiation"></i> [[#{accion.confirmar}]]
                             </h5>
