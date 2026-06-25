@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+    <!-- 1. Agregar categoría -->
+    <section th:fragment="agregar">
+        <button type="button" class="btn btn-secondary rounded-pill px-4" 
+                data-bs-toggle="modal" data-bs-target="#agregarCategoriaModal">
+            <i class="fa-solid fa-plus"></i> [[#{categoria.agregar}]]
+        </button>
+
+        <div class="modal fade" id="agregarCategoriaModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark text-light">
+                    <form th:action="@{/categoria/guardar}" th:object="${categoria}" method="post">
+                        <div class="modal-header bg-secondary text-white">
+                            <h5 class="modal-title">[[#{categoria.agregar}]]</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label>[[#{categoria.nombre}]]</label>
+                            <input type="text" th:field="*{nombre}" class="form-control bg-dark text-light border-secondary" required/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-outline-light">[[#{accion.guardar}]]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Listado de categorías -->
+    <section th:fragment="listado">
+        <table class="table table-dark table-striped table-bordered shadow">
+            <thead class="table-secondary">
+                <tr>
+                    <th>[[#{categoria.nombre}]]</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="c : ${categorias}">
+                    <td th:text="${c.nombre}"></td>
+                    <td class="text-center">
+                        <a th:href="@{/categoria/eliminar/{id}(id=${c.id})}" class="btn btn-sm btn-outline-light me-2">
+                            <i class="fa fa-trash"></i> Eliminar
+                        </a>
+                        <a th:href="@{/categoria/modificar/{id}(id=${c.id})}" class="btn btn-sm btn-outline-secondary">
+                            <i class="fa fa-pencil-alt"></i> Editar
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="fw-bold">[[#{categoria.total}]]: <span th:text="${totalCategorias}"></span></p>
+    </section>
+
+    <!-- 3. Editar categoría -->
+    <section th:fragment="editar">
+        <form th:action="@{/categoria/guardar}" th:object="${categoria}" method="post" class="bg-dark text-light p-3 rounded">
+            <input type="hidden" th:field="*{id}"/>
+            <div class="mb-3">
+                <label>[[#{categoria.nombre}]]</label>
+                <input type="text" th:field="*{nombre}" class="form-control bg-dark text-light border-secondary" required/>
+            </div>
+            <button type="submit" class="btn btn-outline-light">[[#{accion.guardar}]]</button>
+        </form>
+    </section>
+    
+    <!-- 4. Confirmar eliminación -->
+    <section th:fragment="confirmarEliminar">
+        <form th:action="@{/categoria/eliminar}" method="post" class="bg-dark text-light p-3 rounded">
+            <input type="hidden" name="id" id="modalId"/>
+            <div class="modal-body">
+                <p>[[#{accion.confirmar.texto1}]] <span id="modalDescripcion"></span>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-outline-light">
+                    <i class="fa-solid fa-trash"></i> [[#{accion.eliminar}]]
+                </button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    [[#{accion.cerrar}]]
+                </button>
+            </div>
+        </form>
+    </section>
+</html>

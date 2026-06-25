@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{general/fragmentos :: head}"></head>
+
+<body>
+
+    <!-- Menú principal -->
+    <header th:replace="~{general/fragmentos :: header}"></header>
+
+    <main class="container mt-5">
+
+        <div class="card shadow-sm">
+
+            <!-- Título del formulario -->
+            <div class="card-header bg-success text-white">
+                <h1 class="h4 mb-0">Registro de Suculenta</h1>
+            </div>
+
+            <div class="card-body">
+
+                <!--
+                    Formulario para crear o modificar una suculenta.
+
+                    IMPORTANTE:
+                    La categoría se envía como parámetro separado llamado idCategoria.
+                    Esto evita el error de Hibernate con Categoria transient.
+                -->
+                <form th:action="@{/suculenta/guardar}"
+                      th:object="${suculenta}"
+                      method="post"
+                      enctype="multipart/form-data">
+
+                    <!-- ID oculto para saber si crea o modifica -->
+                    <input type="hidden" th:field="*{idSuculenta}">
+
+                    <!-- Ruta de imagen oculta para conservar imagen al modificar -->
+                    <input type="hidden" th:field="*{rutaImagen}">
+
+                    <!-- Nombre común -->
+                    <div class="mb-3">
+                        <label for="nombreComun" class="form-label">Nombre común</label>
+                        <input type="text"
+                               class="form-control"
+                               id="nombreComun"
+                               th:field="*{nombreComun}"
+                               placeholder="Ejemplo: Aloe Vera">
+
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('nombreComun')}"
+                             th:errors="*{nombreComun}">
+                            Error nombre común
+                        </div>
+                    </div>
+
+                    <!-- Nombre científico -->
+                    <div class="mb-3">
+                        <label for="nombreCientifico" class="form-label">Nombre científico</label>
+                        <input type="text"
+                               class="form-control"
+                               id="nombreCientifico"
+                               th:field="*{nombreCientifico}"
+                               placeholder="Ejemplo: Aloe barbadensis miller">
+
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('nombreCientifico')}"
+                             th:errors="*{nombreCientifico}">
+                            Error nombre científico
+                        </div>
+                    </div>
+
+                    <!-- Familia -->
+                    <div class="mb-3">
+                        <label for="familia" class="form-label">Familia</label>
+                        <input type="text"
+                               class="form-control"
+                               id="familia"
+                               th:field="*{familia}"
+                               placeholder="Ejemplo: Asphodelaceae">
+
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('familia')}"
+                             th:errors="*{familia}">
+                            Error familia
+                        </div>
+                    </div>
+
+                    <!-- Categoría -->
+                    <div class="mb-3">
+                        <label for="idCategoria" class="form-label">Categoría</label>
+
+                        <!--
+                            NO usamos th:field="*{categoria.idCategoria}".
+                            Usamos name="idCategoria" para enviarlo separado al controlador.
+                        -->
+                        <select class="form-select"
+                                id="idCategoria"
+                                name="idCategoria">
+
+                            <option value="">Seleccione una categoría</option>
+
+                            <option th:each="categoria : ${categorias}"
+                                    th:value="${categoria.idCategoria}"
+                                    th:text="${categoria.nombre}"
+                                    th:selected="${suculenta.categoria != null and suculenta.categoria.idCategoria == categoria.idCategoria}">
+                                Categoría
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- Color principal -->
+                    <div class="mb-3">
+                        <label for="colorPrincipal" class="form-label">Color principal</label>
+                        <input type="text"
+                               class="form-control"
+                               id="colorPrincipal"
+                               th:field="*{colorPrincipal}"
+                               placeholder="Ejemplo: Verde">
+
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('colorPrincipal')}"
+                             th:errors="*{colorPrincipal}">
+                            Error color
+                        </div>
+                    </div>
+
+                    <!-- Altura -->
+                    <div class="mb-3">
+                        <label for="alturaCm" class="form-label">Altura aproximada en cm</label>
+                        <input type="number"
+                               class="form-control"
+                               id="alturaCm"
+                               th:field="*{alturaCm}"
+                               step="0.01"
+                               min="0"
+                               placeholder="Ejemplo: 35">
+
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('alturaCm')}"
+                             th:errors="*{alturaCm}">
+                            Error altura
+                        </div>
+                    </div>
+
+                    <!-- Precio -->
+                    <div class="mb-3">
+                        <label for="precioEstimado" class="form-label">Precio estimado</label>
+                        <input type="number"
+                               class="form-control"
+                               id="precioEstimado"
+                               th:field="*{precioEstimado}"
+                               step="0.01"
+                               min="0"
+                               placeholder="Ejemplo: 4500">
+
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('precioEstimado')}"
+                             th:errors="*{precioEstimado}">
+                            Error precio
+                        </div>
+                    </div>
+
+                    <!-- Nivel de riego -->
+                    <div class="mb-3">
+                        <label for="nivelRiego" class="form-label">Nivel de riego</label>
+                        <select class="form-select"
+                                id="nivelRiego"
+                                th:field="*{nivelRiego}">
+                            <option value="">Seleccione una opción</option>
+                            <option value="Bajo">Bajo</option>
+                            <option value="Medio">Medio</option>
+                            <option value="Alto">Alto</option>
+                        </select>
+
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('nivelRiego')}"
+                             th:errors="*{nivelRiego}">
+                            Error nivel de riego
+                        </div>
+                    </div>
+
+                    <!-- Imagen -->
+                    <div class="mb-3">
+                        <label for="imagenFile" class="form-label">Imagen de la suculenta</label>
+                        <input type="file"
+                               class="form-control"
+                               id="imagenFile"
+                               name="imagenFile"
+                               accept="image/*">
+                    </div>
+
+                    <!-- Imagen actual -->
+                    <div class="mb-3" th:if="${suculenta.rutaImagen != null and suculenta.rutaImagen != ''}">
+                        <label class="form-label">Imagen actual</label>
+                        <br>
+                        <img th:src="${suculenta.rutaImagen}"
+                             alt="Imagen de suculenta"
+                             class="img-thumbnail"
+                             style="max-width: 220px;">
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="d-flex justify-content-between">
+                        <a th:href="@{/suculentas}" class="btn btn-secondary">
+                            Regresar
+                        </a>
+
+                        <button type="submit" class="btn btn-success">
+                            Guardar
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer th:replace="~{general/fragmentos :: footer}"></footer>
+
+    <!-- Scripts -->
+    <div th:replace="~{general/fragmentos :: scripts}"></div>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Fragmento reutilizable del head -->
+<head th:replace="~{general/fragmentos :: head}"></head>
+
+<body>
+
+    <!-- Menú principal reutilizable -->
+    <header th:replace="~{general/fragmentos :: header}"></header>
+
+    <main class="container mt-5">
+
+        <div class="card shadow-sm">
+
+            <!-- Título del formulario -->
+            <div class="card-header bg-success text-white">
+                <h1 class="h4 mb-0">Registro de Categoría</h1>
+            </div>
+
+            <div class="card-body">
+
+                <!--
+                    Formulario para guardar una categoría.
+
+                    Este formulario usa GET porque el controlador anterior
+                    se definió con @GetMapping("/categoria/guardar").
+
+                    Si luego cambiás el controlador a @PostMapping,
+                    aquí también deberías cambiar method="post".
+                -->
+                <form th:action="@{/categoria/guardar}"
+                      th:object="${categoria}"
+                      method="get">
+
+                    <!-- Campo oculto para crear o modificar -->
+                    <input type="hidden" th:field="*{idCategoria}">
+
+                    <!-- Nombre de la categoría -->
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre de la categoría</label>
+                        <input type="text"
+                               class="form-control"
+                               id="nombre"
+                               th:field="*{nombre}"
+                               placeholder="Ejemplo: Interior"
+                               required>
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <textarea class="form-control"
+                                  id="descripcion"
+                                  th:field="*{descripcion}"
+                                  rows="3"
+                                  placeholder="Ingrese una descripción de la categoría"
+                                  required></textarea>
+                    </div>
+
+                    <!-- Estado activo -->
+                    <div class="form-check mb-4">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               id="activo"
+                               th:field="*{activo}">
+
+                        <label class="form-check-label" for="activo">
+                            Categoría activa
+                        </label>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="d-flex justify-content-between">
+                        <a th:href="@{/categorias}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left-circle"></i>
+                            Regresar
+                        </a>
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-save"></i>
+                            Guardar
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer reutilizable -->
+    <footer th:replace="~{general/fragmentos :: footer}"></footer>
+
+    <!-- Scripts reutilizables -->
+    <div th:replace="~{general/fragmentos :: scripts}"></div>
+
+</body>
+</html>

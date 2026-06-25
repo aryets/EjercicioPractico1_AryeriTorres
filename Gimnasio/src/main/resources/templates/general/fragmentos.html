@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fragmentos</title>
+</head>
+<body>
+
+    <!--
+        FRAGMENTO: head
+
+        Propósito:
+        Este fragmento contiene la configuración general del HTML
+        y las referencias a Bootstrap.
+
+        Se reutiliza en todas las vistas con:
+        <head th:replace="~{general/fragmentos :: head}"></head>
+    -->
+    <head th:fragment="head">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Título general del sistema -->
+        <title>Gestión de Suculentas</title>
+
+        <!-- Bootstrap CSS usando CDN para evitar problemas de rutas con WebJars -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+              rel="stylesheet">
+
+        <!-- Bootstrap Icons -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+              rel="stylesheet">
+    </head>
+
+    <!--
+        FRAGMENTO: header
+
+        Propósito:
+        Muestra el menú principal del sistema.
+
+        Rutas:
+        /              -> Inicio
+        /suculentas    -> Listado de suculentas
+        /categorias    -> Listado de categorías
+    -->
+    <header th:fragment="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+            <div class="container">
+
+                <!-- Marca o nombre del sistema -->
+                <a class="navbar-brand fw-bold" th:href="@{/}">
+                    <i class="bi bi-flower1"></i>
+                    Gestión de Suculentas
+                </a>
+
+                <!-- Botón responsive para pantallas pequeñas -->
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarPrincipal"
+                        aria-controls="navbarPrincipal"
+                        aria-expanded="false"
+                        aria-label="Mostrar navegación">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Opciones del menú -->
+                <div class="collapse navbar-collapse" id="navbarPrincipal">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" th:href="@{/}">Inicio</a></li>
+
+                        <!-- Opción Suculentas -->
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/suculentas}">
+                                Suculentas
+                            </a>
+                        </li>
+
+                        <!-- Opción Categorías -->
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/categorias}">
+                                Categorías
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!--
+        FRAGMENTO: footer
+
+        Propósito:
+        Pie de página reutilizable para todas las vistas.
+    -->
+    <footer th:fragment="footer" class="bg-dark text-white text-center py-3 mt-5">
+        <p class="mb-0">
+            &copy; 2026 Gestión de Suculentas - Derechos Reservados
+        </p>
+    </footer>
+
+    <!--
+        FRAGMENTO: scripts
+
+        Propósito:
+        Carga el JavaScript de Bootstrap.
+        Es necesario para que funcionen elementos como navbar responsive,
+        dropdowns, modales y botones dinámicos.
+    -->
+    <div th:fragment="scripts">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
+
+</body>
+</html>
