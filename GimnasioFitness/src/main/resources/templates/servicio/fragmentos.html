@@ -41,7 +41,7 @@
         <!-- Listado de servicios -->
         <section th:fragment="listado">
             <div class="container my-4">
-                <table class="table table-dark table-striped">
+                <table class="table table-light table-striped text-dark">
                     <thead>
                         <tr>
                             <th>[[#{servicio.nombre}]]</th>
@@ -63,7 +63,7 @@
                                 </a>
 
                                 <!-- Botón Eliminar -->
-                                <a href="#" class="btn btn-sm btn-outline-danger"
+                                <a href="#" class="btn btn-sm btn-outline-dark"
                                    data-bs-toggle="modal" th:attr="data-bs-target='#eliminarModal__' + ${s.id}">
                                     <i class="fa fa-trash"></i> [[#{accion.eliminar}]]
                                 </a>
@@ -117,7 +117,7 @@
                                         <p>[[#{accion.confirmar.texto1}]] <span th:text="${s.nombre}"></span>?</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-danger">
+                                        <button type="submit" class="btn btn-secondary">
                                             <i class="fa-solid fa-trash"></i> [[#{accion.eliminar}]]
                                         </button>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
